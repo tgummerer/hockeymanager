@@ -1,8 +1,79 @@
-/* 
-    Document   : style
-    Created on : Mar 22, 2011, 10:59:43 PM
-    Author     : tommy
-    Description:
-        Purpose of the stylesheet follows.
-*/
+/* layout */
+body {
+    background-color: #CCC;
+	font-family: helvetica, arial, sans-serif;
+    font-size: 12pt;
+}
+
+    div.container {
+        background-color: #FFF;
+        width: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5px;
+    }
+
+        div.header {
+            height: 100px;
+            padding: 10px 10px 10px 10px;
+        }
+            
+            div.title {
+                float: left;
+                width: 600px;
+            }
+
+            div.loginform {
+                float: left;
+                width: 300px;
+            }
+                div.loginform label {
+                    width: 200px;
+                }
+
+        div.navigation {
+            clear: both;
+            height: 14px;
+            padding: 10px 10px 10px 0px;
+            background-color: #FC0;
+        }
+            
+            div.navitem {
+                float: left;
+                width: 100px;
+                border-right: 1px solid #333;
+                padding-left: 10px;
+            }
+
+            div.last {
+                border-right: 0px solid #000;
+            }
+
+        div.body {
+            clear: both;
+            padding: 10px 10px 10px 10px;
+        }
+
+        div.footer {
+            width: 1000px;
+            padding: 10px 10px 10px 10px;
+            font-size: 8pt;
+            text-align: center;
+        }
+
+/* global definitions */
+h1 {
+    font-size: 18pt;
+    font-weight: bold;
+}
+
+
+a {
+    text-decoration: none;
+    color: #1F75CC;
+}
+
+a:hover {
+    text-decoration: underline;
+}
 
