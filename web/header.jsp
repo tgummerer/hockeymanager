@@ -1,13 +1,17 @@
 <div class="title"><h1>Hockey League Manager</h1></div>
 <div class="loginform">
-    <form action="login.jsp" method="post">
+    <form action="Login" method="post">
         <p>
-            <label for="username">Username</label>
-            <input type="text" name="username" />
+            <div class="login">
+                <label for="email">Email</label>
+            </div>
+            <input type="text" name="email" placeholder="Email-Address" />
         </p>
         <p>
-            <label for="password">Password</label>
-            <input type="password" name="password" />
+            <div class="login">
+                <label for="password">Password</label>
+            </div>
+            <input type="password" name="password" placeholder="Password"/>
         </p>
         <p>
             <input type="submit" value="Submit" />

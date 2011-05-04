@@ -27,8 +27,9 @@ body {
                 float: left;
                 width: 300px;
             }
-                div.loginform label {
-                    width: 200px;
+                div.loginform div.login {
+                    float: left;
+                    width: 100px;
                 }
 
         div.navigation {
@@ -77,3 +78,31 @@ a:hover {
     text-decoration: underline;
 }
 
+input {
+    margin-top: 2px;
+    margin-bottom: 5px;
+}
+
+div.error {
+    border: 1px solid #D00;
+    background-color: #F99;
+    padding: 10px;
+    margin: 10px 0px;
+}
+
+div.success {
+    border: 1px solid #0D0;
+    background-color: #9F9;
+    padding: 10px;
+    margin: 10px 0px;
+}
+    
+/* register */
+input.register {
+    width: 200px;
+}
+
+div.register {
+    width: 100px;
+    float: left;
+}

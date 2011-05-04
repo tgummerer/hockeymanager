@@ -9,12 +9,12 @@ public class User {
 	
 	String firstname;
 	String lastname;
-	String username;
+	String email;
 	
 	public User() {
 		firstname = null;
 		lastname = null;
-		username = null;
+		email = null;
 	}
 	
 	public void setFirstName(String name) {
@@ -25,8 +25,8 @@ public class User {
 		lastname = name;
 	}
 	
-	public void setUserName(String name) {
-		username = name;
+	public void setEmail(String name) {
+		email = name;
 	}
 	
 	public String getFirstName() {
@@ -37,8 +37,8 @@ public class User {
 		return lastname;
 	}
 	
-	public String getUserName() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 	
 	

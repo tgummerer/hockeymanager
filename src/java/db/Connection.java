@@ -7,16 +7,13 @@ public class Connection {
 
 	//Instances of Database
     private java.sql.Connection conn;
-    private String dbname;
-    private String password;
-    private String user;
+    private String dbname = "hockeymanager";
+    private String password = "postgres";
+    private String user = "postgres";
     private static Connection currentConnection = null;
 
 	private Connection() throws ClassNotFoundException{
     	setDriver();
-		dbname = "hockeymanager";
-		password = "postgres";
-		user = "postgres";
     }
 
     public void startConnection() throws SQLException{
