@@ -39,8 +39,9 @@ public class Register extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher disp = request.getRequestDispatcher("index.jsp?page=register");
+		Connection con = null;
 		try {
-			Connection con = Connection.getConnection();
+			con = Connection.getConnection();
 			con.startConnection();
 			if (!request.getParameter("password").equals(request.getParameter("passwordconfirm"))) {
 				PasswordsDontMatchException up = new PasswordsDontMatchException("Passwords don't match.");
@@ -60,8 +61,15 @@ public class Register extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			request.setAttribute("error", "The email address is already taken");
+			
 		} catch (PasswordsDontMatchException e) {
 			request.setAttribute("error", "The passwords don't match");
+		} finally {
+			try {
+				con.closeConnection();
+			} catch (SQLException e) {
+				// If it can't be closed just continue.
+			}
 		}
 		disp.forward(request, response);
 	}
