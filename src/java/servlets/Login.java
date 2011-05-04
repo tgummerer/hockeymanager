@@ -12,7 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import helpers.Helpers;
 import db.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,28 +37,42 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher disp = request.getRequestDispatcher("index.jsp");
+        Connection con = null;
 		try {
-			Connection con = Connection.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("select * from usertable where email = " + request.getParameter("email") + 
-														" and password = sha1(" + request.getParameter("password") + ")");
+			con = Connection.getConnection();
+            con.startConnection();
+
+            String encryptedPassword = Helpers.encryptPassword(request.getParameter("password"));
+			PreparedStatement pstmt = con.prepareStatement("select * from usertable where email = '" + request.getParameter("email") + 
+														"' and password = '" + encryptedPassword + "'");
 			pstmt.execute();
+			System.out.println(pstmt.toString());
 			ResultSet rs = pstmt.getResultSet();
 			if (rs.next()) {
 				User user = new User();
-				user.setFirstName(rs.getString("fistname"));
+				user.setFirstName(rs.getString("firstname"));
 				user.setLastName(rs.getString("lastname"));
 				user.setEmail(request.getParameter("email"));
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
+				System.out.println("user");
 			} else {
-				request.setAttribute("error", "Wrong username or password");
+				request.setAttribute("loginerror", "Wrong username or password");
+
 			}
 
 		} catch (ClassNotFoundException e) {
-			// Crap something went wrong
+			e.printStackTrace();
 		} catch (SQLException sqle) {
-			// Something more went totally wrong.
+			sqle.printStackTrace();
+		} finally {
+			try {
+				con.closeConnection();
+			} catch (SQLException e) {
+				// If it can't be closed just continue.
+			}
 		}
+
 		disp.forward(request, response);
 	}
 
