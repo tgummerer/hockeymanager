@@ -9,7 +9,7 @@
                     ${loginerror}
                 </div>
             </c:if>
-            <form action="Login" method="post">
+            <form action="Login?return=${param.page}" method="post">
                 <p>
                     <div class="login">
                         <label for="email">Email</label>
@@ -30,7 +30,12 @@
         </div>
     </c:when>
     <c:otherwise>
-        Loggedin
+        <div class="loggedin">
+            <jsp:useBean id="user" scope="session" class="beans.User" />
+            Welcome <jsp:getProperty name="user" property="firstName" />
+                <jsp:getProperty name="user" property="lastName" />!<br />
+            <a href="Logout?return=${param.page}">Logout</a>
+        </div>
     </c:otherwise>
 </c:choose>
 

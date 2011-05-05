@@ -36,7 +36,7 @@ public class Login extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher disp = request.getRequestDispatcher("index.jsp");
+		RequestDispatcher disp = request.getRequestDispatcher("index.jsp?page=" + request.getParameter("return"));
         Connection con = null;
 		try {
 			con = Connection.getConnection();
@@ -46,7 +46,6 @@ public class Login extends HttpServlet {
 			PreparedStatement pstmt = con.prepareStatement("select * from usertable where email = '" + request.getParameter("email") + 
 														"' and password = '" + encryptedPassword + "'");
 			pstmt.execute();
-			System.out.println(pstmt.toString());
 			ResultSet rs = pstmt.getResultSet();
 			if (rs.next()) {
 				User user = new User();
@@ -55,7 +54,6 @@ public class Login extends HttpServlet {
 				user.setEmail(request.getParameter("email"));
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
-				System.out.println("user");
 			} else {
 				request.setAttribute("loginerror", "Wrong username or password");
 
