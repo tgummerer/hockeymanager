@@ -52,6 +52,7 @@ public class Login extends HttpServlet {
 				user.setFirstName(rs.getString("firstname"));
 				user.setLastName(rs.getString("lastname"));
 				user.setEmail(request.getParameter("email"));
+				user.setAccessLevel(rs.getString("access_level"));
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
 			} else {

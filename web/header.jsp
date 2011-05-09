@@ -31,9 +31,7 @@
     </c:when>
     <c:otherwise>
         <div class="loggedin">
-            <jsp:useBean id="user" scope="session" class="beans.User" />
-            Welcome <jsp:getProperty name="user" property="firstName" />
-                <jsp:getProperty name="user" property="lastName" />!<br />
+            Welcome ${user.firstName} ${user.lastName}!<br />
             <a href="Logout?return=${param.page}">Logout</a>
         </div>
     </c:otherwise>

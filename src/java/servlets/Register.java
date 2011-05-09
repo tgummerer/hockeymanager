@@ -53,7 +53,7 @@ public class Register extends HttpServlet {
                                         " ('" + request.getParameter("firstname") + "', '" + request.getParameter("lastname") + 
                                         "', '" + request.getParameter("email") + "', '" + encryptedPassword + "')");
 
-			System.out.print(pstmt.toString());
+
             pstmt.execute();
 			request.setAttribute("success", "You have been successfully registred.");
 		} catch (ClassNotFoundException e) {
