@@ -30,7 +30,11 @@ public class Logout extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher disp = request.getRequestDispatcher("index.jsp?page=" + request.getParameter("return"));
+		RequestDispatcher disp = null;
+		if (request.getParameter("return").equals("team")) 
+			disp = request.getRequestDispatcher("index.jsp?page=teams");
+		else
+			disp = request.getRequestDispatcher("index.jsp?page=" + request.getParameter("return"));
 		HttpSession session = request.getSession();
 		session.invalidate();
 		

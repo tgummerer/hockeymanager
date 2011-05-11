@@ -11,9 +11,17 @@ package beans;
 public class Team {
 	
 	String teamname = null;
+	int teamid;
 	
+	public void setTeamID(int teamid) {
+		this.teamid = teamid;
+	}
 	public void setTeamName(String name) {
 		teamname = name;
+	}
+
+	public int getTeamID() {
+		return teamid;
 	}
 	
 	public String getTeamName() {

@@ -11,11 +11,14 @@ public class User {
 	String lastname;
 	String email;
     String accesslevel;
+	int teamid;
 	
 	public User() {
 		firstname = null;
 		lastname = null;
 		email = null;
+		accesslevel = null;
+		teamid = -1;
 	}
 	
 	public void setFirstName(String name) {
@@ -34,6 +37,10 @@ public class User {
         accesslevel = level;
     }
 	
+	public void setTeamID(int id) {
+		teamid = id;
+	}
+	
 	public String getFirstName() {
 		return firstname;
 	}
@@ -47,7 +54,10 @@ public class User {
 	}
 
     public String getAccessLevel() {
-		System.out.println("accesslevel");
         return accesslevel;
     }
+	
+	public int getTeamID() {
+		return teamid;
+	}
 }

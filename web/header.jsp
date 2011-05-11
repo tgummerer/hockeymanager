@@ -23,7 +23,7 @@
                     <input type="password" name="password" placeholder="Password"/>
                 </p>
                 <p>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Login" />
                     <input type="reset" value="Reset" />
                 </p>
             </form>

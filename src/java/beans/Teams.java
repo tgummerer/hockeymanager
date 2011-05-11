@@ -26,12 +26,13 @@ public class Teams {
 			con = Connection.getConnection();
 			con.startConnection();
 			
-			PreparedStatement pstmt = con.prepareStatement("select teamname from team");
+			PreparedStatement pstmt = con.prepareStatement("select teamid, teamname from team");
 			pstmt.execute();
 			ResultSet rs = pstmt.getResultSet();
 			teams = new ArrayList<Team>();
 			while (rs.next()) {
 				Team team = new Team();
+				team.setTeamID(rs.getInt("teamid"));
 				team.setTeamName(rs.getString("teamname"));
 				teams.add(team);
 			}

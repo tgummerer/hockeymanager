@@ -12,5 +12,11 @@
 	<c:when test='${param.page == "teams"}'>
 		<jsp:include page="static/teams.jsp" />
 	</c:when>
+	<c:when test='${param.page == "addteam"}'>
+		<jsp:include page="static/addteam.jsp" />
+	</c:when>
+	<c:when test='${param.page == "team"}'>
+		<jsp:include page="static/team.jsp" />
+	</c:when>
 </c:choose>
 

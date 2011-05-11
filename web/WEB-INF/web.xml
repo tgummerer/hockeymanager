@@ -12,6 +12,22 @@
         <servlet-name>Logout</servlet-name>
         <servlet-class>servlets.Logout</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddTeam</servlet-name>
+        <servlet-class>servlets.AddTeam</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteTeam</servlet-name>
+        <servlet-class>servlets.DeleteTeam</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowTeam</servlet-name>
+        <servlet-class>servlets.ShowTeam</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeletePlayer</servlet-name>
+        <servlet-class>servlets.DeletePlayer</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -23,6 +39,22 @@
     <servlet-mapping>
         <servlet-name>Logout</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddTeam</servlet-name>
+        <url-pattern>/AddTeam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteTeam</servlet-name>
+        <url-pattern>/DeleteTeam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowTeam</servlet-name>
+        <url-pattern>/ShowTeam</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletePlayer</servlet-name>
+        <url-pattern>/DeletePlayer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
