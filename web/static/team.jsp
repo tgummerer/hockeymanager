@@ -27,9 +27,25 @@
 		</p>
 	</c:otherwise>
 </c:choose>
+<jsp:include page="../helpers/error.jsp" />
 <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == param.teamid)}">
 <h2>Add Player</h2>
 <form action="AddPlayer?teamid=${param.teamid}" method="post">
+	<p>
+		<label for="number">Number</label><br />
+		<input type="text" name="number" placeholder="Number" />
+	</p>
+	<p>
+		<label for="firstname">First Name</label><br />
+		<input type="text" name="firstname" placeholder="First Name" />
+	</p>
+	<p>
+		<label for="lastname">Last Name</label><br />
+		<input type="text" name="lastname" placeholder="Last Name" />
+	</p>
+	<p>
+		<input type="submit" value="Add Player" />
+		<input type="reset" value="Reset" />
+	</p>
 </form>
 </c:if>
-

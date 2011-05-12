@@ -28,6 +28,14 @@
         <servlet-name>DeletePlayer</servlet-name>
         <servlet-class>servlets.DeletePlayer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddPlayer</servlet-name>
+        <servlet-class>servlets.AddPlayer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteGame</servlet-name>
+        <servlet-class>servlets.DeleteGame</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -55,6 +63,14 @@
     <servlet-mapping>
         <servlet-name>DeletePlayer</servlet-name>
         <url-pattern>/DeletePlayer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddPlayer</servlet-name>
+        <url-pattern>/AddPlayer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteGame</servlet-name>
+        <url-pattern>/DeleteGame</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

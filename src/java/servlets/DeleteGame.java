@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author tommy
  */
-public class DeletePlayer extends HttpServlet {
+public class DeleteGame extends HttpServlet {
 
 
 	/** 
@@ -32,7 +32,7 @@ public class DeletePlayer extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher disp = request.getRequestDispatcher("ShowTeam?teamid=" + request.getParameter("teamid"));
+		RequestDispatcher disp = request.getRequestDispatcher("index.jsp?page=games");
 		Connection con = null;
 		User user = (User)request.getSession().getAttribute("user");
 		if (user != null && (user.getAccessLevel().equals("admin") || 
@@ -48,12 +48,12 @@ public class DeletePlayer extends HttpServlet {
 
 				pstmt.execute();
 				System.out.println(pstmt.toString());
-				request.setAttribute("success", "The player has been deleted.");
+				request.setAttribute("success", "The team has been deleted.");
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {
 				e.printStackTrace();
-				request.setAttribute("error", "Error deleting the player.");
+				request.setAttribute("error", "Error deleting the team.");
 
 			} finally {
 				try {

@@ -18,5 +18,8 @@
 	<c:when test='${param.page == "team"}'>
 		<jsp:include page="static/team.jsp" />
 	</c:when>
+	<c:when test='${param.page == "games"}'>
+		<jsp:include page="static/games.jsp" />
+	</c:when>
 </c:choose>
 
