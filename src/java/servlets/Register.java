@@ -9,17 +9,14 @@ import helpers.Helpers;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-class PasswordsDontMatchException extends Exception {
-	PasswordsDontMatchException(String message) {
-		super(message);
-	}
-}
 
 /**
  *
@@ -27,6 +24,15 @@ class PasswordsDontMatchException extends Exception {
  */
 public class Register extends HttpServlet {
 
+
+	 private boolean isValidEmail(String email){  
+		String exp = "^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";  
+		CharSequence str = email;  
+		Pattern pattern = Pattern.compile(exp, Pattern.CASE_INSENSITIVE);  
+		Matcher matcher = pattern.matcher(str);  
+		return matcher.matches();
+	 }
+  
 
 	/** 
 	 * Handles the HTTP <code>POST</code> method.
@@ -40,36 +46,44 @@ public class Register extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher disp = request.getRequestDispatcher("index.jsp?page=register");
 		Connection con = null;
+        ArrayList<String> errors = new ArrayList<String>();
 		try {
 			con = Connection.getConnection();
 			con.startConnection();
-			if (!request.getParameter("password").equals(request.getParameter("passwordconfirm"))) {
-				PasswordsDontMatchException up = new PasswordsDontMatchException("Passwords don't match.");
-				throw up; // Not funny
-			}
-			
-			String encryptedPassword = Helpers.encryptPassword(request.getParameter("password"));
-			PreparedStatement pstmt = con.prepareStatement("insert into usertable (firstname, lastname, email, password) values" + 
-                                        " ('" + request.getParameter("firstname") + "', '" + request.getParameter("lastname") + 
-                                        "', '" + request.getParameter("email") + "', '" + encryptedPassword + "')");
+			if (!request.getParameter("password").equals(request.getParameter("passwordconfirm")))
+                errors.add("Passwords don't match");
+
+            if (!isValidEmail(request.getParameter("email")))
+                errors.add("The email address you entered is not valid.");
+
+            if (errors.isEmpty()) {
+                String encryptedPassword = Helpers.encryptPassword(request.getParameter("password"));
+                PreparedStatement pstmt = con.prepareStatement("insert into usertable (firstname, lastname, email, password) values" + 
+                                            " ('" + request.getParameter("firstname") + "', '" + request.getParameter("lastname") + 
+                                            "', '" + request.getParameter("email") + "', '" + encryptedPassword + "')");
 
 
-            pstmt.execute();
-			request.setAttribute("success", "You have been successfully registred.");
+                pstmt.execute();
+                request.setAttribute("success", "You have been successfully registred.");
+            }
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			request.setAttribute("error", "The email address is already taken");
-			
-		} catch (PasswordsDontMatchException e) {
-			request.setAttribute("error", "The passwords don't match");
+            errors.add("The email address is already taken.");
 		} finally {
 			try {
 				con.closeConnection();
 			} catch (SQLException e) {
 				// If it can't be closed just continue.
 			}
+		}
+        if (!errors.isEmpty()) {
+            request.setAttribute("errors", errors);
+			// Set attribute, to reenter it to the register form. Convenience for the user
+			request.setAttribute("firstname", request.getParameter("firstname"));
+			request.setAttribute("lastname", request.getParameter("lastname"));
+			request.setAttribute("email", request.getParameter("email"));
 		}
 		disp.forward(request, response);
 	}

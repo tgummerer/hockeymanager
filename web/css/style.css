@@ -116,6 +116,10 @@ table tr th {
 	padding: 5px 5px 5px 5px;
 }   
 
+label {
+	margin-bottom: 5px;
+}
+
 /* register */
 input.register {
     width: 200px;
@@ -129,4 +133,13 @@ div.register {
 /* games page */
 td.result {
 	text-align: center;
+}
+
+div.addgame {
+	float: left;
+	width: 270px;
+	margin-bottom: 5px;
+}
+select {
+	margin-bottom: 5px;
 }

@@ -7,19 +7,19 @@
         <div class="register">
             <label for="firstname">First Name</label><br />
         </div>
-        <input type="text" name="firstname" class="register" placeholder="First Name" />
+        <input type="text" name="firstname" value="${firstname}" class="register" placeholder="First Name" />
     </p>
     <p>
         <div class="register">
             <label for="lastname">Last Name</label><br />
         </div>
-        <input type="text" name="lastname" class="register" placeholder="Password" />
+        <input type="text" name="lastname" value="${lastname}" class="register" placeholder="Password" />
     </p>
     <p>
         <div class="register">
             <label for="email">Email</label><br />
         </div>
-        <input type="email" name="email" class="register" placeholder="Email-Address" />
+        <input type="email" name="email" value="${email}" class="register" placeholder="Email-Address" />
     </p>
     <p>
         <div class="register">

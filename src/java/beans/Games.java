@@ -25,10 +25,9 @@ public class Games {
 			con.startConnection();
 			
 			PreparedStatement pstmt = con.prepareStatement("select h.teamname as hometeam, a.teamname as awayteam, g.gameid, g.date " +
-													" from games g join team h on g.hometeam = h.teamid join team a on g.awayteam = a.teamid " +
+													" from game g join team h on g.hometeam = h.teamid join team a on g.awayteam = a.teamid " +
 													" order by date desc");
 			pstmt.execute();
-			System.out.println(pstmt);
 			ResultSet rs = pstmt.getResultSet();
 			games = new ArrayList<Game>();
 			while (rs.next()) {
