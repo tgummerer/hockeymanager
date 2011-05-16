@@ -21,5 +21,11 @@
 	<c:when test='${param.page == "games"}'>
 		<jsp:include page="static/games.jsp" />
 	</c:when>
+    <c:when test='${param.page == "modifygame"}'>
+        <jsp:include page="static/modifygame.jsp" />
+    </c:when>
+    <c:otherwise>
+        <h1>Page not implemented yet</h1>
+    </c:otherwise>
 </c:choose>
 

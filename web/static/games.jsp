@@ -15,13 +15,13 @@
 	</tr>
 	<c:forEach var="game" items="${games.list}">
 		<tr>
-			<td>${game.date}</td>
+            <td><a href="GameDetail?gameid=${game.gameID}">${game.date}</a></td>
 			<td>${game.homeTeam}</td>
 			<td>${game.awayTeam}</td>
 			<td class=result> : </td>
 			<c:if test="${user.accessLevel == 'admin'}">
 				<td><a href="DeleteGame?gameid=${game.gameID}">Delete</a></td>
-				<td><a href="index.jsp?page=modifygame&gameid=${game.gameID}">Modify</a></td>
+				<td><a href="ModifyGame?gameid=${game.gameID}">Modify</a></td>
 			</c:if>
 		</tr>
 	</c:forEach>

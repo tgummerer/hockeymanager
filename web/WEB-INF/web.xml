@@ -40,6 +40,10 @@
         <servlet-name>AddGame</servlet-name>
         <servlet-class>servlets.AddGame</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ModifyGame</servlet-name>
+        <servlet-class>servlets.ModifyGame</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>AddGame</servlet-name>
         <url-pattern>/AddGame</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ModifyGame</servlet-name>
+        <url-pattern>/ModifyGame</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
