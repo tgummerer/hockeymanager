@@ -15,7 +15,7 @@
 	</tr>
 	<c:forEach var="game" items="${games.list}">
 		<tr>
-            <td><a href="GameDetail?gameid=${game.gameID}">${game.date}</a></td>
+            <td><a href="GameDetails?gameid=${game.gameID}">${game.date}</a></td>
 			<td>${game.homeTeam}</td>
 			<td>${game.awayTeam}</td>
 			<td class=result> : </td>

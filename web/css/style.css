@@ -76,6 +76,29 @@ h2 {
     margin-bottom: 10px;
 }
 
+h3 {
+    font-size: 14pt;
+    font-weight: bold;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+
+h4 {
+    font-size: 13pt;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+em {
+    font-style: italic;
+}
+
+strong {
+    font-weight: bold;
+}
+
 a {
     text-decoration: none;
     color: #1F75CC;
