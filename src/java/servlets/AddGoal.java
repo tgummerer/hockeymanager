@@ -8,15 +8,12 @@ import beans.Player;
 import beans.User;
 import db.Connection;
 import java.io.IOException;
-import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +26,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author tommy
  */
-public class AddGame extends HttpServlet {
+public class AddGoal extends HttpServlet {
 
 
 	/** 
@@ -44,29 +41,23 @@ public class AddGame extends HttpServlet {
 			throws ServletException, IOException {
 		RequestDispatcher disp = request.getRequestDispatcher("index.jsp?page=games");
 		Connection con = null;
-		// HTML5 datetime format is jjjj-mm-ddThh:mmZ
+		// HTML5 datetime format is jjjj-mm-ddThh:mmZ Can be directly used like this to insert it into the database.
 		User user = (User)request.getSession().getAttribute("user");
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
-	
+
 		if (user != null && (user.getAccessLevel().equals("admin"))) {
 			try {
 				if (!request.getParameter("awayteam").equals(request.getParameter("hometeam"))) {
 					con = Connection.getConnection();
 					con.startConnection();
 
-					PreparedStatement pstmt = con.prepareStatement("insert into game (hometeam, awayteam, date) " + 
-                            " values(?, ?, ?)");
-					pstmt.setInt(1, Integer.valueOf(request.getParameter("hometeam")));
-				    pstmt.setInt(2, Integer.valueOf(request.getParameter("awayteam"))); 
-					
-					// Lots of conversions to get the time into the database
-					Date date = df.parse((String)request.getParameter("datetime"));
-					Calendar d = Calendar.getInstance();
-					d.setTime(date);
-				    pstmt.setDate(3, new java.sql.Date(d.getTimeInMillis()));
+					PreparedStatement pstmt = con.prepareStatement("insert into game (hometeam, awayteam, date) values("
+							+ request.getParameter("hometeam") + ", "
+							+ request.getParameter("awayteam") + ", '"
+							+ request.getParameter("datetime") + "')");
 
-                    System.out.println(pstmt.toString());
 					pstmt.execute();
+					System.out.println(pstmt.toString());
 					
 					request.setAttribute("success", "The game has been added.");
 				} else {
@@ -77,9 +68,6 @@ public class AddGame extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				request.setAttribute("error", "The game could not be added.");
-			} catch (ParseException e) {
-				e.printStackTrace();
-				request.setAttribute("error", "The date is in the wrong format.");
 
 			} finally {
 				try {

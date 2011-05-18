@@ -46,8 +46,8 @@ public class ShowTeam extends HttpServlet {
 			con.startConnection();
 
 			PreparedStatement pstmt = con.prepareStatement("select teamname from team where " +
-										" teamid = ('" + request.getParameter("teamid") + "')");
-
+										" teamid = ?");
+            pstmt.setInt(1, Integer.valueOf(request.getParameter("teamid")));
 
 			pstmt.execute();
 			HttpSession session = request.getSession();
@@ -55,7 +55,9 @@ public class ShowTeam extends HttpServlet {
 			if (rs.next()) {
 				session.setAttribute("teamname", rs.getString("teamname"));
 				PreparedStatement players = con.prepareStatement("select * from player where " +
-											" teamid = (" + request.getParameter("teamid") + ")");
+											" teamid = ?");
+                players.setInt(1, Integer.valueOf(request.getParameter("teamid")));
+
 				players.execute();
 				ResultSet rs2 = players.getResultSet();
 				ArrayList<Player> playerlist = new ArrayList<Player>();

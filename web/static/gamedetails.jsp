@@ -25,7 +25,52 @@
 </c:forEach>
 <br />
 <%-- Allow the admin and the team manager of the hometeam to add scores and penalties --%>
+
 <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
+
+<form action="AddGoal?gameid=${gameid}" method="post">
+    <div class="addgoal">
+		<label for="scorer">Scorer</label>
+    </div>
+    <select name="scorer">
+        <c:forEach var="player" items="${players}">
+            <option value="${player.playerID}:${player.team}">(${player.team})#${player.number} - ${player.firstname} ${player.lastname}</option>
+        </c:forEach>
+    </select>
+    <br />
+
+    <div class="addgoal">
+		<label for="assist1">First Assist</label>
+    </div>
+    <select name="assist1">
+        <option value="-1">None</option>
+        <c:forEach var="player" items="${players}">
+            <option value="${player.playerID}:${player.team}">(${player.team})#${player.number} - ${player.firstname} ${player.lastname}</option>
+        </c:forEach>
+    </select>
+    <br />
+
+    <div class="addgoal">
+        <label for="assist2">Second Assist</label>
+    </div>
+    <select name="assist2">
+        <option value="-1">None</option>
+        <c:forEach var="player" items="${players}">
+            <option value="${player.playerID}:${player.team}">(${player.team})#${player.number} - ${player.firstname} ${player.lastname}</option>
+        </c:forEach>
+    </select>
+    <br />
+
+    <div class="addgoal">
+		<label for="time">Time (format: mm:ss)</label>
+	</div>
+    <input type="text" name="time" />
+	<br />
+	<input type="submit" value="Add Goal" />
+	<input type="reset" value="Reset" />
+
+</form>
+
 </c:if>
 <br />
 <br />

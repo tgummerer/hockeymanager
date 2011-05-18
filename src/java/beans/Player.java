@@ -13,6 +13,7 @@ public class Player {
 	private String firstname;
 	private String lastname;
 	private int playerid;
+    private String team;
 
 	public int getNumber() {
 		return number;
@@ -27,6 +28,10 @@ public class Player {
 		return firstname;
 	}
 
+    public String getTeam() {
+        return team;
+    }
+
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
@@ -38,6 +43,10 @@ public class Player {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
 
 	public int getPlayerID() {
 		return playerid;

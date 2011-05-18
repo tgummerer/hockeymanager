@@ -33,6 +33,8 @@ public class Logout extends HttpServlet {
 		RequestDispatcher disp = null;
 		if (request.getParameter("return").equals("team")) 
 			disp = request.getRequestDispatcher("index.jsp?page=teams");
+        else if (request.getParameter("return").equals("gamedetails"))
+            disp = request.getRequestDispatcher("index.jsp?page=games");
 		else
 			disp = request.getRequestDispatcher("index.jsp?page=" + request.getParameter("return"));
 		HttpSession session = request.getSession();

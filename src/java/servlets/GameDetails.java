@@ -7,6 +7,7 @@ package servlets;
 import beans.User;
 import beans.Goal;
 import beans.Penalty;
+import beans.Player;
 import db.Connection;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -48,7 +49,8 @@ public class GameDetails extends HttpServlet {
 
 				PreparedStatement pstmt = con.prepareStatement("select h.teamname as hometeamname, a.teamname as awayteamname, h.teamid as hometeamid, a.teamid as awayteamid" + 
                         " from game g join team h on g.hometeam = h.teamid join team a on g.awayteam = a.teamid" + 
-                        " where gameid = " + request.getParameter("gameid"));
+                        " where gameid = ?");
+                pstmt.setInt(1, Integer.valueOf(request.getParameter("gameid")));
 
 				pstmt.execute();
 				ResultSet rs = pstmt.getResultSet();
@@ -67,8 +69,10 @@ public class GameDetails extends HttpServlet {
                 
                 pstmt = con.prepareStatement("select s.time, p.teamid as teamid, p.firstname as scorerfirst, p.lastname as scorerlast, a1.firstname as a1first, a1.lastname as a1last, a2.firstname as a2first, a2.lastname as a2last" +
                         " from score s join player p on s.scorer = p.playerid left join player a1 on s.assist1 = a1.playerid left join player a2 on s.assist2 = a2.playerid" +
-                        " where gameid = " + request.getParameter("gameid") +
+                        " where gameid = ?" +
                         " order by s.time asc");
+
+                pstmt.setInt(1, Integer.valueOf(request.getParameter("gameid")));
                 pstmt.execute();
                 rs = pstmt.getResultSet();
                 ArrayList<Goal> goals = new ArrayList<Goal>();
@@ -99,8 +103,10 @@ public class GameDetails extends HttpServlet {
 
                 pstmt = con.prepareStatement("select pim.time, pt.minutes, pt.type, p.teamid as teamid, p.firstname as firstname, p.lastname as lastname" +
                         " from penalty pim join penaltytype pt on pim.type = pt.typeid join player p on pim.player = p.playerid" +
-                        " where gameid = " + request.getParameter("gameid") +
+                        " where gameid = ?" +
                         " order by pim.time asc");
+
+                pstmt.setInt(1, Integer.valueOf(request.getParameter("gameid")));
 
 				pstmt.execute();
                 rs = pstmt.getResultSet();
@@ -126,6 +132,33 @@ public class GameDetails extends HttpServlet {
                 request.setAttribute("hometeampim", hometeampim);
                 request.setAttribute("awayteampim", awayteampim);
                 request.setAttribute("penalties", penalties);
+
+                // Playerlist
+                pstmt = con.prepareStatement("select firstname, lastname, number, teamid " +
+                        " from player " + 
+                        " where teamid = ? or teamid = ?");
+
+                pstmt.setInt(1, hometeamid);
+                pstmt.setInt(2, awayteamid);
+				pstmt.execute();
+
+                rs = pstmt.getResultSet();
+                ArrayList<Player> players = new ArrayList<Player>();
+                while (rs.next()) {
+                    Player player = new Player();
+                    player.setFirstname(rs.getString("firstname"));
+                    player.setLastname(rs.getString("lastname"));
+                    player.setNumber(rs.getInt("number"));
+                    if (rs.getInt("teamid") == hometeamid) {
+                        player.setTeam(hometeam);
+                    }
+                    else {
+                        player.setTeam(awayteam);
+                    }
+
+                    players.add(player);
+                }
+                request.setAttribute("players", players);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {

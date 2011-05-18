@@ -48,6 +48,10 @@
         <servlet-name>GameDetails</servlet-name>
         <servlet-class>servlets.GameDetails</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddGoal</servlet-name>
+        <servlet-class>servlets.AddGoal</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>GameDetails</servlet-name>
         <url-pattern>/GameDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddGoal</servlet-name>
+        <url-pattern>/AddGoal</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

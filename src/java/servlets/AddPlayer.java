@@ -47,11 +47,11 @@ public class AddPlayer extends HttpServlet {
 				con.startConnection();
 
 				PreparedStatement pstmt = con.prepareStatement("insert into player (teamid, firstname, lastname, number) "
-						+ "values" + " (" + request.getParameter("teamid") + ", '" 
-						+ request.getParameter("firstname") + "', '"
-						+ request.getParameter("lastname") + "', "
-						+ request.getParameter("number") + ")");
-
+						+ "values (?, ?, ?, ?)");
+                pstmt.setInt(1, Integer.valueOf(request.getParameter("teamid")));
+                pstmt.setString(2, request.getParameter("firstname"));
+                pstmt.setString(3, request.getParameter("lastname"));
+                pstmt.setInt(4, Integer.valueOf(request.getParameter("number")));
 
 				pstmt.execute();
 				

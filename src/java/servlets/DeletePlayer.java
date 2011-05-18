@@ -43,8 +43,9 @@ public class DeletePlayer extends HttpServlet {
 				con.startConnection();
 
 				PreparedStatement pstmt = con.prepareStatement("delete from player " +
-																"where playerid = " + request.getParameter("playerid")); 
+																"where playerid = ?"); 
 
+                pstmt.setInt(1, Integer.valueOf(request.getParameter("playerid")));
 
 				pstmt.execute();
 				System.out.println(pstmt.toString());

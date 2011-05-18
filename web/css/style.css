@@ -143,6 +143,10 @@ label {
 	margin-bottom: 5px;
 }
 
+select {
+	margin-bottom: 5px;
+}
+
 /* register */
 input.register {
     width: 200px;
@@ -163,6 +167,10 @@ div.addgame {
 	width: 270px;
 	margin-bottom: 5px;
 }
-select {
+
+/* gamedetail page */
+div.addgoal {
+	float: left;
+	width: 250px;
 	margin-bottom: 5px;
 }

@@ -58,10 +58,13 @@ public class Register extends HttpServlet {
 
             if (errors.isEmpty()) {
                 String encryptedPassword = Helpers.encryptPassword(request.getParameter("password"));
-                PreparedStatement pstmt = con.prepareStatement("insert into usertable (firstname, lastname, email, password) values" + 
-                                            " ('" + request.getParameter("firstname") + "', '" + request.getParameter("lastname") + 
-                                            "', '" + request.getParameter("email") + "', '" + encryptedPassword + "')");
+                PreparedStatement pstmt = con.prepareStatement("insert into usertable (firstname, lastname, email, password)" + 
+                                            " values (?, ?, ?, ?)");
 
+                pstmt.setString(1, request.getParameter("firstname"));
+                pstmt.setString(2, request.getParameter("lastname"));
+                pstmt.setString(3, request.getParameter("email"));
+                pstmt.setString(4, encryptedPassword);
 
                 pstmt.execute();
                 request.setAttribute("success", "You have been successfully registred.");

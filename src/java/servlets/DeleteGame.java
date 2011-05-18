@@ -41,8 +41,10 @@ public class DeleteGame extends HttpServlet {
 				con.startConnection();
 
 				PreparedStatement pstmt = con.prepareStatement("delete from game " +
-																"where gameid = " + request.getParameter("gameid")); 
+																"where gameid = ?"); 
 
+                pstmt.setInt(1, Integer.valueOf(request.getParameter("gameid")));
+                System.out.println(pstmt.toString());
 
 				pstmt.execute();
 				request.setAttribute("success", "The game has been deleted.");

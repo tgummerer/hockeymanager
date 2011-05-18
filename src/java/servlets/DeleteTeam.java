@@ -42,8 +42,9 @@ public class DeleteTeam extends HttpServlet {
 				con.startConnection();
 
 				PreparedStatement pstmt = con.prepareStatement("delete from team " +
-																"where teamid = " + request.getParameter("teamid")); 
+																"where teamid = ?"); 
 
+                pstmt.setInt(1, Integer.valueOf(request.getParameter("teamid")));
 
 				pstmt.execute();
 				System.out.println(pstmt.toString());

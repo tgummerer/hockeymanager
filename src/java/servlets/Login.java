@@ -39,6 +39,8 @@ public class Login extends HttpServlet {
 		RequestDispatcher disp = null;
 		if (request.getParameter("return").equals("team")) 
 			disp = request.getRequestDispatcher("index.jsp?page=teams");
+        else if (request.getParameter("return").equals("gamedetails"))
+            disp = request.getRequestDispatcher("index.jsp?page=games");
 		else
 			disp = request.getRequestDispatcher("index.jsp?page=" + request.getParameter("return"));
         Connection con = null;
@@ -47,8 +49,11 @@ public class Login extends HttpServlet {
             con.startConnection();
 
             String encryptedPassword = Helpers.encryptPassword(request.getParameter("password"));
-			PreparedStatement pstmt = con.prepareStatement("select * from usertable where email = '" + request.getParameter("email") + 
-														"' and password = '" + encryptedPassword + "'");
+			PreparedStatement pstmt = con.prepareStatement("select * from usertable where email = ? and password = ?");
+
+            pstmt.setString(1, request.getParameter("email"));
+            pstmt.setString(2, encryptedPassword);
+
 			pstmt.execute();
 			ResultSet rs = pstmt.getResultSet();
 			if (rs.next()) {

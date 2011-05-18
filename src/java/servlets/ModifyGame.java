@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -44,7 +49,8 @@ public class ModifyGame extends HttpServlet {
 				con = Connection.getConnection();
 				con.startConnection();
 
-				PreparedStatement pstmt = con.prepareStatement("select * from game where gameid = " + request.getParameter("gameid"));
+				PreparedStatement pstmt = con.prepareStatement("select * from game where gameid = ?");
+                pstmt.setInt(1, Integer.valueOf(request.getParameter("gameid")));
 
 				pstmt.execute();
 				ResultSet rs = pstmt.getResultSet();
@@ -93,12 +99,22 @@ public class ModifyGame extends HttpServlet {
 			try {
 				con = Connection.getConnection();
 				con.startConnection();
+                DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
 
 				PreparedStatement pstmt = con.prepareStatement("update game "
-						+ " set hometeam = " + request.getParameter("hometeam") 
-						+ ", awayteam = " + request.getParameter("awayteam")
-						+ ", date = '" + request.getParameter("datetime")
-						+ "' where gameid = " + request.getParameter("gameid"));
+						+ " set hometeam = ?"
+						+ ", awayteam = ?"
+						+ ", date = ? " 
+						+ " where gameid = ?");
+
+                pstmt.setInt(1, Integer.valueOf(request.getParameter("hometeam")));
+                pstmt.setInt(2, Integer.valueOf(request.getParameter("awayteam")));
+
+                Date date = df.parse((String)request.getParameter("datetime"));
+                Calendar d = Calendar.getInstance();
+                d.setTime(date);
+                pstmt.setDate(3, new java.sql.Date(d.getTimeInMillis()));
+                pstmt.setInt(4, Integer.valueOf(request.getParameter("gameid")));
 
 				pstmt.execute();
 				System.out.println(pstmt.toString());
@@ -108,7 +124,9 @@ public class ModifyGame extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 				request.setAttribute("error", "The game could not be updated.");
-
+            } catch (ParseException e) {
+                e.printStackTrace();
+                request.setAttribute("error", "The date is in the wrong format.");
 			} finally {
 				try {
 					con.closeConnection();

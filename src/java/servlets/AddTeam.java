@@ -40,9 +40,9 @@ public class AddTeam extends HttpServlet {
 				con = Connection.getConnection();
 				con.startConnection();
 
-				PreparedStatement pstmt = con.prepareStatement("insert into team (teamname) values" + 
-											" ('" + request.getParameter("teamname") + "')");
+				PreparedStatement pstmt = con.prepareStatement("insert into team (teamname) values (?)");
 
+                pstmt.setString(1, request.getParameter("teamname"));
 
 				pstmt.execute();
 				request.setAttribute("success", "The team has been added.");
