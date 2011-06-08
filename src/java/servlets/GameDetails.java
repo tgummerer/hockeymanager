@@ -19,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -27,23 +28,18 @@ import javax.servlet.http.HttpServletResponse;
 public class GameDetails extends HttpServlet {
 
 
-	/** 
-	 * Handles the HTTP <code>GET</code> method.
-	 * @param request servlet request
-	 * @param response servlet response
-	 * @throws ServletException if a servlet-specific error occurs
-	 * @throws IOException if an I/O error occurs
-	 */
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher disp = request.getRequestDispatcher("index.jsp?page=gamedetails");
+				RequestDispatcher disp = request.getRequestDispatcher("index.jsp?page=gamedetails");
+        HttpSession session = request.getSession();
 		Connection con = null;
         if (request.getParameter("gameid") == null) {
             request.setAttribute("error", "The gameid has to be given");
         }
 		if (request.getParameter("gameid") != null) {
 			try {
+                // Forward the gameid
+                request.setAttribute("gameid", request.getParameter("gameid"));
 				con = Connection.getConnection();
 				con.startConnection();
 
@@ -97,8 +93,9 @@ public class GameDetails extends HttpServlet {
 
                 request.setAttribute("hometeamscore", hometeamscore);
                 request.setAttribute("awayteamscore", awayteamscore);
-                request.setAttribute("hometeamid", hometeamid);
-                request.setAttribute("awayteamid", awayteamid);
+                // Won't change until you view another game and will be overwritten then
+                session.setAttribute("hometeamid", hometeamid);
+                session.setAttribute("awayteamid", awayteamid);
                 request.setAttribute("goals", goals);
 
                 pstmt = con.prepareStatement("select pim.time, pt.minutes, pt.type, p.teamid as teamid, p.firstname as firstname, p.lastname as lastname" +
@@ -134,7 +131,7 @@ public class GameDetails extends HttpServlet {
                 request.setAttribute("penalties", penalties);
 
                 // Playerlist
-                pstmt = con.prepareStatement("select firstname, lastname, number, teamid " +
+                pstmt = con.prepareStatement("select playerid, firstname, lastname, number, teamid " +
                         " from player " + 
                         " where teamid = ? or teamid = ?");
 
@@ -146,6 +143,7 @@ public class GameDetails extends HttpServlet {
                 ArrayList<Player> players = new ArrayList<Player>();
                 while (rs.next()) {
                     Player player = new Player();
+					player.setPlayerID(rs.getInt("playerid"));
                     player.setFirstname(rs.getString("firstname"));
                     player.setLastname(rs.getString("lastname"));
                     player.setNumber(rs.getInt("number"));
@@ -175,6 +173,25 @@ public class GameDetails extends HttpServlet {
 			request.setAttribute("error", "You don't have sufficient rights to perform this operation.");
 		}
 		disp.forward(request, response);
+	}
+	/** 
+	 * Handles the HTTP <code>GET</code> method.
+	 * @param request servlet request
+	 * @param response servlet response
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException if an I/O error occurs
+	 */
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+			processRequest(request,response);
+	}
+
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		processRequest(request, response);
 	}
 
 }

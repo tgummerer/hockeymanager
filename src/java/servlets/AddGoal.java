@@ -8,12 +8,16 @@ import beans.Player;
 import beans.User;
 import db.Connection;
 import java.io.IOException;
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -39,39 +43,65 @@ public class AddGoal extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher disp = request.getRequestDispatcher("index.jsp?page=games");
+		RequestDispatcher disp = request.getRequestDispatcher("GameDetails?gameid=" + request.getParameter("gameid"));
 		Connection con = null;
-		// HTML5 datetime format is jjjj-mm-ddThh:mmZ Can be directly used like this to insert it into the database.
+        HttpSession session = request.getSession();
 		User user = (User)request.getSession().getAttribute("user");
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
-
-		if (user != null && (user.getAccessLevel().equals("admin"))) {
+        // Errors
+        ArrayList<String> errors = new ArrayList<String>();
+	
+		if (user != null && (user.getAccessLevel().equals("admin") ||
+                (user.getAccessLevel().equals("manager") && user.getTeamID() == Integer.valueOf((String)session.getAttribute("hometeamid"))))) {
 			try {
-				if (!request.getParameter("awayteam").equals(request.getParameter("hometeam"))) {
-					con = Connection.getConnection();
-					con.startConnection();
+                con = Connection.getConnection();
+                con.startConnection();
+                String[] scorer = ((String)request.getParameter("scorer")).split(":");
+                String[] assist1 = ((String)request.getParameter("assist1")).split(":");
+                String[] assist2 = ((String)request.getParameter("assist2")).split(":");
 
-					PreparedStatement pstmt = con.prepareStatement("insert into game (hometeam, awayteam, date) values("
-							+ request.getParameter("hometeam") + ", "
-							+ request.getParameter("awayteam") + ", '"
-							+ request.getParameter("datetime") + "')");
+                // Check if all players are from the same team
+                if (assist1.length == 1 || (assist2.length == 1 && assist1[0].equals(scorer[0])) ||
+                        (assist1[0].equals(scorer[0]) && assist2[0].equals(scorer[0]))) {
+                    if (assist2.length == 1)
+                        assist2 = null;
 
-					pstmt.execute();
-					System.out.println(pstmt.toString());
+                    if (assist1.length == 1) {
+                        assist1 = null;
+                        assist2 = null;
+                    }
+
+                    PreparedStatement pstmt = con.prepareStatement("insert into score (scorer, assist1, assist2, time, gameid) values (?, ?, ?, ?, ?)");
+                   
+					System.out.println(scorer[0]);
+					pstmt.setInt(1, Integer.valueOf(scorer[1]));
+                    if (assist1 != null)
+                        pstmt.setInt(2, Integer.valueOf(assist1[1]));
+                    else
+                        pstmt.setNull(2, java.sql.Types.INTEGER);
+
+                    if (assist2 != null)
+                        pstmt.setInt(3, Integer.valueOf(assist2[1]));
+                    else
+                        pstmt.setNull(3, java.sql.Types.INTEGER);
 					
-					request.setAttribute("success", "The game has been added.");
-				} else {
-					request.setAttribute("error", "A team can't play against itself");
-				}
+					// Calculate time by hand
+					String[] time = ((String)request.getParameter("time")).split(":");
+                    pstmt.setInt(4, Integer.valueOf(time[0]) * 60 + Integer.valueOf(time[1]));
+					pstmt.setInt(5, Integer.valueOf(request.getParameter("gameid")));
+                    
+                    pstmt.execute();
+
+                } else {
+                    errors.add("The scorer and the assists have to be from the same team");
+                }
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {
 				e.printStackTrace();
-				request.setAttribute("error", "The game could not be added.");
-
+			} catch (NumberFormatException e) {
+				errors.add("Wrong date format.");
 			} finally {
 				try {
-					// Connection might not be initialized, if the user has entered the same team for home and away team
 					if (con != null)
 						con.closeConnection();
 				} catch (SQLException e) {
@@ -79,8 +109,16 @@ public class AddGoal extends HttpServlet {
 				}
 			}
 		} else {
-			request.setAttribute("error", "You don't have sufficient rights to perform this operation.");
+            errors.add("You don't have sufficient rights to perform this operation.");
 		}
+        request.setAttribute("errors", errors);
+		disp.forward(request, response);
+	}
+	
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher disp = request.getRequestDispatcher("GameDetails?gameid=" + request.getParameter("gameid"));
 		disp.forward(request, response);
 	}
 

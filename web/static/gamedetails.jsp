@@ -34,7 +34,7 @@
     </div>
     <select name="scorer">
         <c:forEach var="player" items="${players}">
-            <option value="${player.playerID}:${player.team}">(${player.team})#${player.number} - ${player.firstname} ${player.lastname}</option>
+            <option value="${player.team}:${player.playerID}">(${player.team}) #${player.number} - ${player.firstname} ${player.lastname}</option>
         </c:forEach>
     </select>
     <br />
@@ -45,7 +45,7 @@
     <select name="assist1">
         <option value="-1">None</option>
         <c:forEach var="player" items="${players}">
-            <option value="${player.playerID}:${player.team}">(${player.team})#${player.number} - ${player.firstname} ${player.lastname}</option>
+            <option value="${player.team}:${player.playerID}">(${player.team}) #${player.number} - ${player.firstname} ${player.lastname}</option>
         </c:forEach>
     </select>
     <br />
@@ -56,7 +56,7 @@
     <select name="assist2">
         <option value="-1">None</option>
         <c:forEach var="player" items="${players}">
-            <option value="${player.playerID}:${player.team}">(${player.team})#${player.number} - ${player.firstname} ${player.lastname}</option>
+            <option value="${player.team}:${player.playerID}">(${player.team}) #${player.number} - ${player.firstname} ${player.lastname}</option>
         </c:forEach>
     </select>
     <br />
