@@ -174,3 +174,9 @@ div.addgoal {
 	width: 250px;
 	margin-bottom: 5px;
 }
+
+div.addpenalty {
+	float: left;
+	width: 250px;
+	margin-bottom: 5px;
+}

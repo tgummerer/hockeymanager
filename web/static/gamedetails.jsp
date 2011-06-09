@@ -83,6 +83,39 @@
     </c:if>
 </c:forEach>
 <h4>2nd period</h4>
-<i>No penalties yet</i>
 <h4>3rd period</h4>
-<i>No penalties yet</i>
+<%-- Allow the admin and the team manager of the hometeam to add scores and penalties --%>
+
+<c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
+
+<form action="AddPenalty?gameid=${gameid}" method="post">
+    <div class="addpenalty">
+		<label for="penalized">Penalized Player</label>
+    </div>
+    <select name="penalized">
+        <c:forEach var="player" items="${players}">
+            <option value="${player.team}:${player.playerID}">(${player.team}) #${player.number} - ${player.firstname} ${player.lastname}</option>
+        </c:forEach>
+    </select>
+    <br />
+
+    <div class="addpenalty">
+        <label for="penalty">Penalty Type</label>
+    </div>
+    <select name="penalty">
+        <c:forEach var="type" items="${penaltytypes}">
+            <option value="${type.typeID}">${type.type} (${type.minutes} min)</option>
+        </c:forEach>
+    </select>
+
+    <div class="addpenalty">
+		<label for="time">Time (format: mm:ss)</label>
+	</div>
+    <input type="text" name="time" />
+	<br />
+	<input type="submit" value="Add Penalty" />
+	<input type="reset" value="Reset" />
+
+</form>
+
+</c:if>

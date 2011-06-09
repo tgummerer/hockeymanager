@@ -8,6 +8,7 @@ import beans.User;
 import beans.Goal;
 import beans.Penalty;
 import beans.Player;
+import beans.PenaltyType;
 import db.Connection;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -157,6 +158,21 @@ public class GameDetails extends HttpServlet {
                     players.add(player);
                 }
                 request.setAttribute("players", players);
+
+                // Penalty types list
+                pstmt = con.prepareStatement("select typeid, minutes, type " +
+                        " from penaltytype");
+                pstmt.execute();
+                rs = pstmt.getResultSet();
+                ArrayList<PenaltyType> penaltytypes = new ArrayList<PenaltyType>();
+                while (rs.next()) {
+                    PenaltyType type = new PenaltyType();
+                    type.setTypeID(rs.getInt("typeid"));
+                    type.setMinutes(rs.getInt("minutes"));
+                    type.setType(rs.getString("type"));
+                    penaltytypes.add(type);
+                }
+                request.setAttribute("penaltytypes", penaltytypes);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {

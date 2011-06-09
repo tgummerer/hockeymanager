@@ -26,6 +26,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
+
+class DateFormatException extends Exception {
+	public DateFormatException(String message) {
+		super(message);
+	}
+}
 /**
  *
  * @author tommy
@@ -86,6 +92,11 @@ public class AddGoal extends HttpServlet {
 					
 					// Calculate time by hand
 					String[] time = ((String)request.getParameter("time")).split(":");
+					if (time.length != 2) {
+						DateFormatException up = new DateFormatException("Wrong date format");
+						throw up;
+					}
+						
                     pstmt.setInt(4, Integer.valueOf(time[0]) * 60 + Integer.valueOf(time[1]));
 					pstmt.setInt(5, Integer.valueOf(request.getParameter("gameid")));
                     
@@ -99,6 +110,8 @@ public class AddGoal extends HttpServlet {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} catch (NumberFormatException e) {
+				errors.add("Wrong date format.");
+			} catch (DateFormatException e) {
 				errors.add("Wrong date format.");
 			} finally {
 				try {

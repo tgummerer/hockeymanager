@@ -52,6 +52,10 @@
         <servlet-name>AddGoal</servlet-name>
         <servlet-class>servlets.AddGoal</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddPenalty</servlet-name>
+        <servlet-class>servlets.AddPenalty</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -103,6 +107,10 @@
     <servlet-mapping>
         <servlet-name>AddGoal</servlet-name>
         <url-pattern>/AddGoal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddPenalty</servlet-name>
+        <url-pattern>/AddPenalty</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
