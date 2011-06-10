@@ -14,6 +14,8 @@ public class Game {
 	String hometeam;
 	String awayteam;
 	String date;
+    String homescore;
+    String awayscore;
 	
 	public void setGameID(int gameid) {
 		this.gameid = gameid;
@@ -31,6 +33,14 @@ public class Game {
 		this.date = date;
 	}
 
+    public void setHomeScore(String homescore) {
+        this.homescore = homescore;
+    }
+
+    public void setAwayScore(String awayscore) {
+        this.awayscore = awayscore;
+    }
+
 	public int getGameID() {
 		return gameid;
 	}
@@ -46,4 +56,12 @@ public class Game {
 	public String getDate() {
 		return date;
 	}
+
+    public String getHomeScore () {
+        return homescore;
+    }
+
+    public String getAwayScore () {
+        return awayscore;
+    }
 }

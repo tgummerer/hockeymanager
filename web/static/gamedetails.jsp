@@ -94,7 +94,7 @@
     </div>
     <select name="penalized">
         <c:forEach var="player" items="${players}">
-            <option value="${player.team}:${player.playerID}">(${player.team}) #${player.number} - ${player.firstname} ${player.lastname}</option>
+            <option value="${player.playerID}">(${player.team}) #${player.number} - ${player.firstname} ${player.lastname}</option>
         </c:forEach>
     </select>
     <br />
@@ -107,7 +107,7 @@
             <option value="${type.typeID}">${type.type} (${type.minutes} min)</option>
         </c:forEach>
     </select>
-
+    <br />
     <div class="addpenalty">
 		<label for="time">Time (format: mm:ss)</label>
 	</div>

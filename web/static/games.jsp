@@ -18,7 +18,7 @@
             <td><a href="GameDetails?gameid=${game.gameID}">${game.date}</a></td>
 			<td>${game.homeTeam}</td>
 			<td>${game.awayTeam}</td>
-			<td class=result> : </td>
+            <td class=result>${game.homeScore} : ${game.awayScore}</td>
 			<c:if test="${user.accessLevel == 'admin'}">
 				<td><a href="DeleteGame?gameid=${game.gameID}">Delete</a></td>
 				<td><a href="ModifyGame?gameid=${game.gameID}">Modify</a></td>

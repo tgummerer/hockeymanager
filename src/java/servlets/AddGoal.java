@@ -24,14 +24,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import helpers.DateFormatException;
 
 
 
-class DateFormatException extends Exception {
-	public DateFormatException(String message) {
-		super(message);
-	}
-}
 /**
  *
  * @author tommy
