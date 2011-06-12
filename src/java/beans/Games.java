@@ -18,7 +18,7 @@ import java.util.Date;
  */
 public class Games {
 	
-	public ArrayList<Game> games;
+	private ArrayList<Game> games;
 	
 	public Games() {
 		Connection con = null;

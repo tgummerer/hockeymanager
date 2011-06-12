@@ -18,7 +18,7 @@ import org.apache.jasper.tagplugins.jstl.core.ForEach;
  */
 public class Teams {
 	
-	public ArrayList<Team> teams;
+	private ArrayList<Team> teams;
 	
 	public Teams() {
 		Connection con = null;
