@@ -56,6 +56,18 @@
         <servlet-name>AddPenalty</servlet-name>
         <servlet-class>servlets.AddPenalty</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddComment</servlet-name>
+        <servlet-class>servlets.AddComment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteGoal</servlet-name>
+        <servlet-class>servlets.DeleteGoal</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeletePenalty</servlet-name>
+        <servlet-class>servlets.DeletePenalty</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -111,6 +123,18 @@
     <servlet-mapping>
         <servlet-name>AddPenalty</servlet-name>
         <url-pattern>/AddPenalty</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddComment</servlet-name>
+        <url-pattern>/AddComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteGoal</servlet-name>
+        <url-pattern>/DeleteGoal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeletePenalty</servlet-name>
+        <url-pattern>/DeletePenalty</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

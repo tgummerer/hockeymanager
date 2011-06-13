@@ -12,6 +12,7 @@ public class User {
 	String email;
     String accesslevel;
 	int teamid;
+	int userid;
 	
 	public User() {
 		firstname = null;
@@ -41,6 +42,10 @@ public class User {
 		teamid = id;
 	}
 	
+	public void setUserID(int id) {
+		userid = id;
+	}
+	
 	public String getFirstName() {
 		return firstname;
 	}
@@ -59,5 +64,9 @@ public class User {
 	
 	public int getTeamID() {
 		return teamid;
+	}
+	
+	public int getUserID() {
+		return userid;
 	}
 }

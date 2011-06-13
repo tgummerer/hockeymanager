@@ -14,11 +14,16 @@ public class Goal {
 	private String assist1;
 	private String assist2;
     private String teamname;
+	private int goalid;
     
 	// Not really needed, but gave exception when it was not here
 	// Seems like a compiler bug
 	public Goal() {
 		super();
+	}
+	
+	public int getGoalID() {
+		return goalid;
 	}
 	
     public String getTeamName() {
@@ -93,6 +98,10 @@ public class Goal {
             this.assist2 = "No second assist";
         else
             this.assist2 = assist2;
+	}
+	
+	public void setGoalID(int goalid) {
+		this.goalid = goalid;
 	}
 	
 }

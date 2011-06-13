@@ -41,7 +41,7 @@ body {
             
             div.navitem {
                 float: left;
-                width: 100px;
+                width: 150px;
                 border-right: 1px solid #333;
                 padding-left: 10px;
             }
@@ -179,4 +179,13 @@ div.addpenalty {
 	float: left;
 	width: 250px;
 	margin-bottom: 5px;
+}
+
+textarea {
+    height: 200px;
+    width: 400px;
+}
+
+small {
+    font-size: 8pt;
 }

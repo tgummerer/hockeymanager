@@ -6,21 +6,33 @@
 <h4>1st period</h4>
 <c:forEach var="goal" items="${goals}">
     <c:if test="${goal.period == 1}">
-        <strong>${goal.teamName}</strong> - <em>${goal.scorer}</em> (${goal.assist1}, ${goal.assist2}) - ${goal.formattedTime}<br />
+        <strong>${goal.teamName}</strong> - <em>${goal.scorer}</em> (${goal.assist1}, ${goal.assist2}) - ${goal.formattedTime}
+        <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
+            <a href="DeleteGoal?goalid=${goal.goalID}&gameid=${gameid}">Delete</a>
+        </c:if>
+        <br />
     </c:if>
 </c:forEach>
 
 <h4>2nd period</h3>
 <c:forEach var="goal" items="${goals}">
     <c:if test="${goal.period == 2}">
-        <strong>${goal.teamName}</strong> - <em>${goal.scorer}</em> (${goal.assist1}, ${goal.assist2}) - ${goal.formattedTime}<br />
+        <strong>${goal.teamName}</strong> - <em>${goal.scorer}</em> (${goal.assist1}, ${goal.assist2}) - ${goal.formattedTime}
+        <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
+                <a href="DeleteGoal?goalid=${goal.goalID}&gameid=${gameid}">Delete</a>
+        </c:if>
+        <br />
     </c:if>
 </c:forEach>
 
 <h4>3rd period</h4>
 <c:forEach var="goal" items="${goals}">
     <c:if test="${goal.period == 3}">
-        <strong>${goal.teamName}</strong> - <em>${goal.scorer}</em> (${goal.assist1}, ${goal.assist2}) - ${goal.formattedTime}<br />
+        <strong>${goal.teamName}</strong> - <em>${goal.scorer}</em> (${goal.assist1}, ${goal.assist2}) - ${goal.formattedTime}
+        <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
+            <a href="DeleteGoal?goalid=${goal.goalID}&gameid=${gameid}">Delete</a>
+        </c:if>
+        <br />
     </c:if>
 </c:forEach>
 <br />
@@ -79,11 +91,34 @@
 <h4>1st period</h4>
 <c:forEach var="penalty" items="${penalties}">
     <c:if test="${penalty.period == 1}">
-    <strong>${penalty.teamName}</strong> - <em>${penalty.player}</em> (${penalty.minutes} Min ${penalty.type}) - ${penalty.formattedTime}<br />
+        <strong>${penalty.teamName}</strong> - <em>${penalty.player}</em> (${penalty.minutes} Min ${penalty.type}) - ${penalty.formattedTime}
+        <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
+            <a href="DeletePenalty?penaltyid=${penalty.penaltyID}&gameid=${gameid}">Delete</a>
+        </c:if>
+        <br />
     </c:if>
 </c:forEach>
 <h4>2nd period</h4>
+<c:forEach var="penalty" items="${penalties}">
+    <c:if test="${penalty.period == 2}">
+        <strong>${penalty.teamName}</strong> - <em>${penalty.player}</em> (${penalty.minutes} Min ${penalty.type}) - ${penalty.formattedTime}
+        <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
+            <a href="DeletePenalty?penaltyid=${penalty.penaltyID}&gameid=${gameid}">Delete</a>
+        </c:if>
+        <br />
+    </c:if>
+</c:forEach>
 <h4>3rd period</h4>
+<c:forEach var="penalty" items="${penalties}">
+    <c:if test="${penalty.period == 3}">
+        <strong>${penalty.teamName}</strong> - <em>${penalty.player}</em> (${penalty.minutes} Min ${penalty.type}) - ${penalty.formattedTime}
+        <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
+            <a href="DeletePenalty?penaltyid=${penalty.penaltyID}&gameid=${gameid}">Delete</a>
+        </c:if>
+        <br />
+    </c:if>
+</c:forEach>
+
 <%-- Allow the admin and the team manager of the hometeam to add scores and penalties --%>
 
 <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
@@ -117,5 +152,23 @@
 	<input type="reset" value="Reset" />
 
 </form>
+</c:if>
 
+<hr />
+<c:forEach var="comment" items="${comments}" varStatus="status">
+    <div class="comment">
+        <strong>${comment.firstName} ${comment.lastName}:</strong><br />
+        <small>${comment.date}</small><br />
+        ${comment.text}
+    </div>
+    ${not status.last? '<hr />' : '<br /><br />'}
+</c:forEach>
+
+<%-- Let the users add some comments to the game --%>
+<c:if test="${not empty user}">
+<form action="AddComment?gameid=${gameid}" method="post">
+    <textarea name="text"></textarea>
+    <br />
+    <input type="submit" value="Add Comment" />
+</form>
 </c:if>

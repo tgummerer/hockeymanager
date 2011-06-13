@@ -13,4 +13,3 @@
         </tr>
     </c:forEach>
 </table>
-    

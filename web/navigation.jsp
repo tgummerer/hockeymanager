@@ -6,6 +6,11 @@
 <c:choose>
     <c:when test="${user.accessLevel == 'admin'}">
 		<div class="navitem"><a href="index.jsp?page=addteam">Add Team</a></div>
+        <div class="navitem last"><a href="index.jsp?page=changeuser">Set Permissions</a></div>
 	</c:when>
 </c:choose>
-<div class="navitem last"><a href="index.jsp?page=register">Register</a></div>
+<c:choose>
+    <c:when test="${empty user}">
+        <div class="navitem last"><a href="index.jsp?page=register">Register</a></div>
+    </c:when>
+</c:choose>

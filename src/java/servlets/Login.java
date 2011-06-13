@@ -63,6 +63,7 @@ public class Login extends HttpServlet {
 				user.setEmail(request.getParameter("email"));
 				user.setAccessLevel(rs.getString("access_level"));
 				user.setTeamID(rs.getInt("teamid"));
+				user.setUserID(rs.getInt("userid"));
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
 			} else {

@@ -65,7 +65,6 @@ public class AddGame extends HttpServlet {
 					d.setTime(date);
 				    pstmt.setDate(3, new java.sql.Date(d.getTimeInMillis()));
 
-                    System.out.println(pstmt.toString());
 					pstmt.execute();
 					
 					request.setAttribute("success", "The game has been added.");

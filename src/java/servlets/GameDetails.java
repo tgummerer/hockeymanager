@@ -9,6 +9,7 @@ import beans.Goal;
 import beans.Penalty;
 import beans.Player;
 import beans.PenaltyType;
+import beans.Comment;
 import db.Connection;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -64,7 +65,7 @@ public class GameDetails extends HttpServlet {
 					request.setAttribute("error", "The game you want to view was not found.");
 				}
                 
-                pstmt = con.prepareStatement("select s.time, p.teamid as teamid, p.firstname as scorerfirst, p.lastname as scorerlast, a1.firstname as a1first, a1.lastname as a1last, a2.firstname as a2first, a2.lastname as a2last" +
+                pstmt = con.prepareStatement("select s.scoreid, s.time, p.teamid as teamid, p.firstname as scorerfirst, p.lastname as scorerlast, a1.firstname as a1first, a1.lastname as a1last, a2.firstname as a2first, a2.lastname as a2last" +
                         " from score s join player p on s.scorer = p.playerid left join player a1 on s.assist1 = a1.playerid left join player a2 on s.assist2 = a2.playerid" +
                         " where gameid = ?" +
                         " order by s.time asc");
@@ -88,6 +89,8 @@ public class GameDetails extends HttpServlet {
                         goal.setTeamName(awayteam);
                         awayteamscore++;
                     }
+					
+					goal.setGoalID(rs.getInt("scoreid"));
 
                     goals.add(goal);
                 }
@@ -99,7 +102,7 @@ public class GameDetails extends HttpServlet {
                 session.setAttribute("awayteamid", awayteamid);
                 request.setAttribute("goals", goals);
 
-                pstmt = con.prepareStatement("select pim.time, pt.minutes, pt.type, p.teamid as teamid, p.firstname as firstname, p.lastname as lastname" +
+                pstmt = con.prepareStatement("select pim.penaltyid, pim.time, pt.minutes, pt.type, p.teamid as teamid, p.firstname as firstname, p.lastname as lastname" +
                         " from penalty pim join penaltytype pt on pim.type = pt.typeid join player p on pim.player = p.playerid" +
                         " where gameid = ?" +
                         " order by pim.time asc");
@@ -124,7 +127,7 @@ public class GameDetails extends HttpServlet {
                         penalty.setTeamName(awayteam);
                         awayteampim += rs.getInt("minutes");
                     }
-
+					penalty.setPenaltyID(rs.getInt("penaltyid"));
                     penalties.add(penalty);
                 }
                 request.setAttribute("hometeampim", hometeampim);
@@ -173,6 +176,25 @@ public class GameDetails extends HttpServlet {
                     penaltytypes.add(type);
                 }
                 request.setAttribute("penaltytypes", penaltytypes);
+
+
+                // Comments
+                pstmt = con.prepareStatement("select u.firstname, u.lastname, c.text, c.date " +
+                        " from comment c join usertable u on c.userid = u.userid join game g on c.gameid = g.gameid " +
+                        " where g.gameid = ?");
+                pstmt.setInt(1, Integer.valueOf(request.getParameter("gameid")));
+                pstmt.execute();
+                rs = pstmt.getResultSet();
+                ArrayList<Comment> comments = new ArrayList<Comment>();
+                while (rs.next()) {
+                    Comment comment = new Comment();
+                    comment.setFirstName(rs.getString("firstname"));
+                    comment.setLastName(rs.getString("lastname"));
+                    comment.setText(rs.getString("text"));
+                    comment.setDate(rs.getString("date"));
+                    comments.add(comment);
+                }
+                request.setAttribute("comments", comments);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (SQLException e) {

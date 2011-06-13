@@ -74,7 +74,6 @@ public class AddGoal extends HttpServlet {
 
                     PreparedStatement pstmt = con.prepareStatement("insert into score (scorer, assist1, assist2, time, gameid) values (?, ?, ?, ?, ?)");
                    
-					System.out.println(scorer[0]);
 					pstmt.setInt(1, Integer.valueOf(scorer[1]));
                     if (assist1 != null)
                         pstmt.setInt(2, Integer.valueOf(assist1[1]));

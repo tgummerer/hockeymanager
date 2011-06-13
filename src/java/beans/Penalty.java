@@ -14,7 +14,8 @@ public class Penalty {
     private String teamname;
     private int minutes;
     private String type;
-    
+    private int penaltyid;
+	
     public String getTeamName() {
         return teamname;
     }
@@ -58,6 +59,10 @@ public class Penalty {
     public String getType() {
         return type;
     }
+	
+	public int getPenaltyID() {
+		return penaltyid;
+	}
 
     public void setTeamName(String teamname) {
         this.teamname = teamname;
@@ -82,5 +87,9 @@ public class Penalty {
     public void setType(String type) {
         this.type = type;
     }
+	
+	public void setPenaltyID(int id) {
+		this.penaltyid = id;
+	}
 
 }
