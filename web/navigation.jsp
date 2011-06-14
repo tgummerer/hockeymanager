@@ -2,7 +2,14 @@
 <div class="navitem"><a href="index.jsp">Home</a></div>
 <div class="navitem"><a href="index.jsp?page=games">All Games</a></div>
 <div class="navitem"><a href="index.jsp?page=standings">Standings</a></div>
-<div class="navitem"><a href="index.jsp?page=teams">Teams</a></div>
+<c:choose>
+    <c:when test="${user.accessLevel == 'manager'}">
+        <div class="navitem last"><a href="index.jsp?page=teams">Teams</a></div>
+    </c:when>
+    <c:otherwise>
+        <div class="navitem"><a href="index.jsp?page=teams">Teams</a></div>
+    </c:otherwise>
+</c:choose>
 <c:choose>
     <c:when test="${user.accessLevel == 'admin'}">
 		<div class="navitem"><a href="index.jsp?page=addteam">Add Team</a></div>
