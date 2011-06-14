@@ -14,6 +14,7 @@
         <title>Hockey league manager</title>
 		<link href="css/reset.css" rel="stylesheet" type="text/css" />
 		<link href="css/style.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/register.js"></script>
     </head>
     <body>
 		<div class="container">
