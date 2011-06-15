@@ -4,8 +4,16 @@
     Author     : tommy
 --%>
 
+<%@page import="helpers.Helpers"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+// Log in, if cookie is set
+if (session.getAttribute("user") == null) {
+    Cookie cookies[] = request.getCookies();
+	session.setAttribute("user", Helpers.login(cookies));
+}
+%>
 <!DOCTYPE html>
 
 <html>

@@ -14,10 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import helpers.Helpers;
 import db.Connection;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -25,6 +28,13 @@ import javax.servlet.http.HttpSession;
  * @author tommy
  */
 public class Login extends HttpServlet {
+
+	private SecureRandom random = new SecureRandom();
+
+	private String nextSessionId()
+	{
+		return new BigInteger(130, random).toString(32);
+	}
 
 	/** 
 	 * Handles the HTTP <code>POST</code> method.
@@ -66,9 +76,25 @@ public class Login extends HttpServlet {
 				user.setUserID(rs.getInt("userid"));
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
+				if (request.getParameter("staylogged") != null) {
+					Cookie cookie = new Cookie("u", rs.getString("userid"));
+					// A long time
+					cookie.setMaxAge(360000);
+					response.addCookie(cookie);
+
+					String sessionId = nextSessionId();
+					Cookie security = new Cookie("s", sessionId);
+					// A long time
+					security.setMaxAge(360000);
+					response.addCookie(security);
+
+					pstmt = con.prepareStatement("update usertable set cookievalue = ? where userid = ?");
+					pstmt.setString(1, sessionId);
+					pstmt.setInt(2, rs.getInt("userid"));
+					pstmt.execute();
+				}
 			} else {
 				request.setAttribute("loginerror", "Wrong username or password");
-
 			}
 
 		} catch (ClassNotFoundException e) {

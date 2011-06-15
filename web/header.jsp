@@ -22,6 +22,11 @@
                     </div>
                     <input type="password" name="password" placeholder="Password"/>
                 </p>
+				<p>
+				<div class="login">
+					<label for="staylogged">Stay logged in</label>
+				</div>
+				<input type="checkbox" name="staylogged" />
                 <p>
                     <input type="submit" value="Login" />
                     <input type="reset" value="Reset" />
