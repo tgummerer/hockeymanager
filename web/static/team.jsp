@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <h1>${teamname}</h1>
 <c:choose>
 	<c:when test="${not empty playerlist}">
@@ -13,9 +14,9 @@
 			<c:forEach var="player" items="${playerlist}">
 				<tr>
 					<td>${player.number}</td>
-					<td>${player.firstname} ${player.lastname}</td>
+					<td>${fn:escapeXml(player.firstname)} ${fn:escapeXml(player.lastname)}</td>
 					<c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == param.teamid)}">
-						<td><a href="DeletePlayer?playerid=${player.playerID}&teamid=${param.teamid}">Delete</a></td>
+						<td><a href="DeletePlayer?playerid=${player.playerID}&teamid=${fn:escapeXml(param.teamid)}">Delete</a></td>
 					</c:if>
 				</tr>
 			</c:forEach>

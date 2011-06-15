@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="../helpers/error.jsp" />
 <c:choose>
     <c:when test="${user.accessLevel == 'admin'}">
@@ -8,7 +9,7 @@
             <jsp:useBean id="users" class="beans.Users" scope="request" />
             <select name="user">
             <c:forEach var="user" items="${users.list}">
-                <option value="${user.userID}">${user.firstName} ${user.lastName}</option>
+                <option value="${user.userID}">${fn:escapeXml(user.firstName)} ${fn:escapeXml(user.lastName)}</option>
             </c:forEach>
             </select>
             <br />
@@ -23,7 +24,7 @@
             <jsp:useBean id="teams" class="beans.Teams" scope="request" />
             <select name="team">
             <c:forEach var="team" items="${teams.list}">
-                <option value="${team.teamID}">${team.teamName}</option>
+                <option value="${team.teamID}">${fn:escapeXml(team.teamName)}</option>
             </c:forEach>
             </select><br />
             <input type="submit" value="Change Permissions" />

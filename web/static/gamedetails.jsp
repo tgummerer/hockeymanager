@@ -1,12 +1,13 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="../helpers/error.jsp" />
 <h1>Game Details</h1>
-<h2>${hometeam} ${hometeamscore} - ${awayteam} ${awayteamscore}</h2>
+<h2>${fn:escapeXml(hometeam)} ${hometeamscore} - ${fn:escapeXml(awayteam)} ${awayteamscore}</h2>
 <h3>Goals</h3>
 <h4>1st period</h4>
 <c:forEach var="goal" items="${goals}">
     <c:if test="${goal.period == 1}">
-        <strong>${goal.teamName}</strong> - <em>${goal.scorer}</em> (${goal.assist1}, ${goal.assist2}) - ${goal.formattedTime}
+        <strong>${fn:escapeXml(goal.teamName)}</strong> - <em>${fn:escapeXml(goal.scorer)}</em> (${fn:escapeXml(goal.assist1)}, ${fn:escapeXml(goal.assist2)}) - ${goal.formattedTime}
         <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
             <a href="DeleteGoal?goalid=${goal.goalID}&gameid=${gameid}">Delete</a>
         </c:if>
@@ -17,7 +18,7 @@
 <h4>2nd period</h3>
 <c:forEach var="goal" items="${goals}">
     <c:if test="${goal.period == 2}">
-        <strong>${goal.teamName}</strong> - <em>${goal.scorer}</em> (${goal.assist1}, ${goal.assist2}) - ${goal.formattedTime}
+        <strong>${fn:escapeXml(goal.teamName)}</strong> - <em>${fn:escapeXml(goal.scorer)}</em> (${fn:escapeXml(goal.assist1)}, ${fn:escapeXml(goal.assist2)}) - ${goal.formattedTime}
         <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
                 <a href="DeleteGoal?goalid=${goal.goalID}&gameid=${gameid}">Delete</a>
         </c:if>
@@ -28,7 +29,7 @@
 <h4>3rd period</h4>
 <c:forEach var="goal" items="${goals}">
     <c:if test="${goal.period == 3}">
-        <strong>${goal.teamName}</strong> - <em>${goal.scorer}</em> (${goal.assist1}, ${goal.assist2}) - ${goal.formattedTime}
+        <strong>${fn:escapeXml(goal.teamName)}</strong> - <em>${fn:escapeXml(goal.scorer)}</em> (${fn:escapeXml(goal.assist1)}, ${fn:escapeXml(goal.assist2)}) - ${goal.formattedTime}
         <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
             <a href="DeleteGoal?goalid=${goal.goalID}&gameid=${gameid}">Delete</a>
         </c:if>
@@ -46,7 +47,7 @@
     </div>
     <select name="scorer">
         <c:forEach var="player" items="${players}">
-            <option value="${player.team}:${player.playerID}">(${player.team}) #${player.number} - ${player.firstname} ${player.lastname}</option>
+            <option value="${fn:escapeXml(player.team)}:${player.playerID}">(${fn:escapeXml(player.team)}) #${player.number} - ${fn:escapeXml(player.firstname)} ${fn:escapeXml(player.lastname)}</option>
         </c:forEach>
     </select>
     <br />
@@ -57,7 +58,7 @@
     <select name="assist1">
         <option value="-1">None</option>
         <c:forEach var="player" items="${players}">
-            <option value="${player.team}:${player.playerID}">(${player.team}) #${player.number} - ${player.firstname} ${player.lastname}</option>
+            <option value="${fn:escapeXml(player.team)}:${player.playerID}">(${fn:escapeXml(player.team)}) #${player.number} - ${fn:escapeXml(player.firstname)} ${fn:escapeXml(player.lastname)}</option>
         </c:forEach>
     </select>
     <br />
@@ -68,7 +69,7 @@
     <select name="assist2">
         <option value="-1">None</option>
         <c:forEach var="player" items="${players}">
-            <option value="${player.team}:${player.playerID}">(${player.team}) #${player.number} - ${player.firstname} ${player.lastname}</option>
+            <option value="${fn:escapeXml(player.team)}:${player.playerID}">(${fn:escapeXml(player.team)}) #${player.number} - ${fn:escapeXml(player.firstname)} ${fn:escapeXml(player.lastname)}</option>
         </c:forEach>
     </select>
     <br />
@@ -91,7 +92,7 @@
 <h4>1st period</h4>
 <c:forEach var="penalty" items="${penalties}">
     <c:if test="${penalty.period == 1}">
-        <strong>${penalty.teamName}</strong> - <em>${penalty.player}</em> (${penalty.minutes} Min ${penalty.type}) - ${penalty.formattedTime}
+        <strong>${fn:escapeXml(penalty.teamName)}</strong> - <em>${fn:escapeXml(penalty.player)}</em> (${penalty.minutes} Min ${penalty.type}) - ${penalty.formattedTime}
         <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
             <a href="DeletePenalty?penaltyid=${penalty.penaltyID}&gameid=${gameid}">Delete</a>
         </c:if>
@@ -101,7 +102,7 @@
 <h4>2nd period</h4>
 <c:forEach var="penalty" items="${penalties}">
     <c:if test="${penalty.period == 2}">
-        <strong>${penalty.teamName}</strong> - <em>${penalty.player}</em> (${penalty.minutes} Min ${penalty.type}) - ${penalty.formattedTime}
+        <strong>${fn:escapeXml(penalty.teamName)}</strong> - <em>${fn:escapeXml(penalty.player)}</em> (${penalty.minutes} Min ${penalty.type}) - ${penalty.formattedTime}
         <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
             <a href="DeletePenalty?penaltyid=${penalty.penaltyID}&gameid=${gameid}">Delete</a>
         </c:if>
@@ -111,7 +112,7 @@
 <h4>3rd period</h4>
 <c:forEach var="penalty" items="${penalties}">
     <c:if test="${penalty.period == 3}">
-        <strong>${penalty.teamName}</strong> - <em>${penalty.player}</em> (${penalty.minutes} Min ${penalty.type}) - ${penalty.formattedTime}
+        <strong>${fn:escapeXml(penalty.teamName)}</strong> - <em>${fn:escapeXml(penalty.player)}</em> (${penalty.minutes} Min ${penalty.type}) - ${penalty.formattedTime}
         <c:if test="${user.accessLevel == 'admin' || (user.accessLevel == 'manager' && user.teamID == hometeamid)}">
             <a href="DeletePenalty?penaltyid=${penalty.penaltyID}&gameid=${gameid}">Delete</a>
         </c:if>
@@ -129,7 +130,7 @@
     </div>
     <select name="penalized">
         <c:forEach var="player" items="${players}">
-            <option value="${player.playerID}">(${player.team}) #${player.number} - ${player.firstname} ${player.lastname}</option>
+            <option value="${player.playerID}">(${fn:escapeXml(player.team)}) #${player.number} - ${fn:escapeXml(player.firstname)} ${fn:escapeXml(player.lastname)}</option>
         </c:forEach>
     </select>
     <br />
@@ -139,7 +140,7 @@
     </div>
     <select name="penalty">
         <c:forEach var="type" items="${penaltytypes}">
-            <option value="${type.typeID}">${type.type} (${type.minutes} min)</option>
+            <option value="${type.typeID}">${fn:escapeXml(type.type)} (${type.minutes} min)</option>
         </c:forEach>
     </select>
     <br />
@@ -157,9 +158,9 @@
 <hr />
 <c:forEach var="comment" items="${comments}" varStatus="status">
     <div class="comment">
-        <strong>${comment.firstName} ${comment.lastName}:</strong><br />
+        <strong>${fn:escapeXml(comment.firstName)} ${fn:escapeXml(comment.lastName)}:</strong><br />
         <small>${comment.date}</small><br />
-        ${comment.text}
+        ${fn:escapeXml(comment.text)}
     </div>
     ${not status.last? '<hr />' : '<br /><br />'}
 </c:forEach>

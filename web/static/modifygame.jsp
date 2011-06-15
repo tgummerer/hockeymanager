@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:if test="${user.accessLevel == 'admin'}">
 <jsp:useBean id="teams" class="beans.Teams" scope="request" />
@@ -12,10 +13,10 @@
 		<c:forEach var="team" items="${teams.list}">
             <c:choose>
                 <c:when test="${team.teamID == hometeam}">
-                    <option value="${team.teamID}" selected>${team.teamName}</option>
+                    <option value="${team.teamID}" selected>${fn:escapeXml(team.teamName)}</option>
                 </c:when>
                 <c:otherwise>
-                    <option value="${team.teamID}">${team.teamName}</option>
+                    <option value="${team.teamID}">${fn:escapeXml(team.teamName)}</option>
                 </c:otherwise>
             </c:choose>
 		</c:forEach>
@@ -29,10 +30,10 @@
 		<c:forEach var="team" items="${teams.list}">
             <c:choose>
                 <c:when test="${team.teamID == awayteam}">
-                    <option value="${team.teamID}" selected>${team.teamName}</option>
+                    <option value="${team.teamID}" selected>${fn:escapeXml(team.teamName)}</option>
                 </c:when>
                 <c:otherwise>
-                    <option value="${team.teamID}">${team.teamName}</option>
+                    <option value="${team.teamID}">${fn:escapeXml(team.teamName)}</option>
                 </c:otherwise>
             </c:choose>
 		</c:forEach>

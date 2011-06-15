@@ -1,5 +1,6 @@
 <div class="title"><h1>Hockey League Manager</h1></div>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:choose>
     <c:when test="${empty sessionScope.user}">
         <div class="loginform">
@@ -36,7 +37,7 @@
     </c:when>
     <c:otherwise>
         <div class="loggedin">
-            Welcome ${user.firstName} ${user.lastName}!<br />
+            Welcome ${fn:escapeXml(user.firstName)} ${fn:escapeXml(user.lastName)}!<br />
             <a href="Logout?return=${param.page}">Logout</a>
         </div>
     </c:otherwise>

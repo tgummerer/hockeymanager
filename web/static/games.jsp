@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:useBean id="games" class="beans.Games" scope="request" />
 <jsp:include page="../helpers/error.jsp" />
 <h1>Games</h1>
@@ -16,9 +17,9 @@
 	<c:forEach var="game" items="${games.list}">
 		<tr>
             <td><a href="GameDetails?gameid=${game.gameID}">${game.date}</a></td>
-			<td>${game.homeTeam}</td>
-			<td>${game.awayTeam}</td>
-            <td class=result>${game.homeScore} : ${game.awayScore}</td>
+			<td>${fn:escapeXml(game.homeTeam)}</td>
+			<td>${fn:escapeXml(game.awayTeam)}</td>
+            <td class=result>${fn:escapeXml(game.homeScore)} : ${fn:escapeXml(game.awayScore)}</td>
 			<c:if test="${user.accessLevel == 'admin'}">
 				<td><a href="DeleteGame?gameid=${game.gameID}">Delete</a></td>
 				<td><a href="ModifyGame?gameid=${game.gameID}">Modify</a></td>
@@ -35,7 +36,7 @@
 	</div>
 	<select name="hometeam">
 		<c:forEach var="team" items="${teams.list}">
-			<option value="${team.teamID}">${team.teamName}</option>
+			<option value="${team.teamID}">${fn:escapeXml(team.teamName)}</option>
 		</c:forEach>
 	</select>
 	<br />
@@ -45,7 +46,7 @@
 	</div>
 	<select name="awayteam">
 		<c:forEach var="team" items="${teams.list}">
-			<option value="${team.teamID}">${team.teamName}</option>
+			<option value="${team.teamID}">${fn:escapeXml(team.teamName)}</option>
 		</c:forEach>
 	</select>
 	<br />
