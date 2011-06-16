@@ -57,7 +57,7 @@ public class ModifyGame extends HttpServlet {
 				if (rs.next()) {
 					request.setAttribute("hometeam", rs.getString("hometeam"));
                     request.setAttribute("awayteam", rs.getString("awayteam"));
-                    request.setAttribute("date", rs.getString("date").replace(" ", "T") + "Z");
+                    request.setAttribute("date", rs.getString("date").replace(" ", "T").substring(0, 16) + "Z");
 				} else {
 					request.setAttribute("error", "The game you want to modify was not found.");
 				}
